@@ -1,101 +1,69 @@
-import Image from "next/image";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faJs, faPhp, faWindows, faLinux 
+} from '@fortawesome/free-brands-svg-icons';
+import { 
+  faCode, faCodeBranch, faDatabase 
+} from '@fortawesome/free-solid-svg-icons';
+import Image from 'next/image';
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div id="main-content">
+      <section className="container">
+        <div className="main-profile">
+          <div className="profile-image-container">
+            <Image src="/favicon.ico" alt="Profile Image" width={128} height={128} className="profile-image" />
+          </div>
+          <h2>HI, I'M KWON JI YEON</h2>
+          <p>
+            안녕하세요, 개발자 권지연입니다.
+            <br />이 블로그는 제가 배우고 경험한 다양한 개발 주제와 개인적인 통차을 공유하는 공간입니다.
+            <br />기술적인 글부터 일상적인 이야기까지, 다양한 콘텐츠를 통해 여러분과 소통하고 싶습니다.
+          </p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        <div className="skills">
+          <h2>Skills</h2>
+          <table className="skill-table">
+            <tbody>
+              <tr>
+                <td>Languages</td>
+                <td>
+                  <FontAwesomeIcon icon={faJs} className="skill-icon js" title="JavaScript" />
+                  <FontAwesomeIcon icon={faPhp} className="skill-icon php" title="PHP" />
+                  <FontAwesomeIcon icon={faWindows} className="skill-icon csharp" title="C#" />
+                </td>
+              </tr>
+              <tr>
+                <td>Frameworks & Libraries</td>
+                <td>
+                  <FontAwesomeIcon icon={faCode} className="skill-icon jquery" title="jQuery" />
+                  <FontAwesomeIcon icon={faCodeBranch} className="skill-icon dotnet" title=".NET Core" />
+                </td>
+              </tr>
+              <tr>
+                <td>Databases</td>
+                <td>
+                  <FontAwesomeIcon icon={faDatabase} className="skill-icon mongodb" title="MongoDB" />
+                  <FontAwesomeIcon icon={faDatabase} className="skill-icon mysql" title="MySQL" />
+                </td>
+              </tr>
+              <tr>
+                <td>Operating Systems</td>
+                <td>
+                  <FontAwesomeIcon icon={faLinux} className="skill-icon linux" title="Linux" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div className="career">
+          <h2>Career</h2>
+          {/* Career 내용은 추후 추가 */}
+        </div>
+      </section>
     </div>
   );
 }

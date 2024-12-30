@@ -1,0 +1,135 @@
+/* Header Styles */
+header {
+  background-color: #E6CCBE;
+  padding: 1rem 0;
+}
+
+#header {
+  text-align: center;
+}
+
+#header h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+#header p {
+  font-size: 0.875rem;
+  color: #4a4a4a;
+}
+
+/* Main Content Styles */
+#main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* Profile Section */
+.main-profile {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.profile-image-container {
+  width: 8rem;
+  height: 8rem;
+  margin: 0 auto 1rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: 9999px;
+}
+
+.profile-image {
+  object-fit: cover;
+}
+
+.main-profile h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.main-profile p {
+  color: #4b5563;
+  line-height: 1.75;
+}
+
+/* Skills Section */
+.skills {
+  margin-bottom: 3rem;
+}
+
+.skills h2, .career h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.skill-table {
+  width: 100%;
+  max-width: 42rem;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+.skill-table tr {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.skill-table td {
+  padding: 1rem;
+}
+
+.skill-table td:first-child {
+  width: 33.333333%;
+  font-weight: 600;
+}
+
+.skill-icon {
+  font-size: 1.5rem;
+  margin: 0 0.5rem;
+}
+
+/* Skill Icons Colors */
+.skill-icon.js { color: #F7DF1E; }
+.skill-icon.php { color: #777BB4; }
+.skill-icon.csharp { color: #239120; }
+.skill-icon.jquery { color: #0769AD; }
+.skill-icon.dotnet { color: #512BD4; }
+.skill-icon.mongodb { color: #4DB33D; }
+.skill-icon.mysql { color: #00758F; }
+.skill-icon.linux { color: #FCC624; }
+
+/* Footer Styles */
+footer {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.footer-icons {
+  margin-bottom: 1rem;
+}
+
+.footer-icons a {
+  margin: 0 0.5rem;
+  color: #333;
+  font-size: 1.25rem;
+  text-decoration: none;
+}
+
+.footer-icons a:hover {
+  color: #666;
+}
+
+footer p {
+  font-size: 0.875rem;
+  color: #666;
+}
