@@ -17,7 +17,9 @@
 }
 
 .headerContent {
-  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }
 
 .headerContent h1 {
@@ -35,6 +37,41 @@
   font-size: 0.9rem;
   color: #666;
   letter-spacing: -0.3px;
+}
+
+.logoLink {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+  transition: opacity 0.2s ease;
+}
+
+.logoLink:hover {
+  opacity: 0.8;
+}
+
+.logoLink h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.logoLink p {
+  margin: 0.5rem 0 0;
+  font-size: 1rem;
+  color: #666;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.logo:hover {
+  color: #2196F3;
 }
 
 .navbar {

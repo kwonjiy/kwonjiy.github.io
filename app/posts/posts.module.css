@@ -1,0 +1,572 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.titleLink {
+  color: inherit;
+  text-decoration: none;
+  background: linear-gradient(45deg, #2196F3, #E91E63);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: opacity 0.2s ease;
+}
+
+.titleLink:hover {
+  opacity: 0.8;
+}
+
+.postsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  height: 600px;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.cardContent {
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.imageWrapper {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.imageWrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .imageWrapper img {
+  transform: scale(1.05);
+}
+
+.postTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 1rem 0;
+  color: #1a1a1a;
+  line-height: 1.4;
+}
+
+.markdownContent {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 리스트 페이지의 마크다운 콘텐츠에만 적용 */
+.postsGrid .markdownContent {
+  max-height: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+/* 상세 페이지의 마크다운 콘텐츠는 제한 없이 표시 */
+.postContainer .markdownContent {
+  max-height: none;
+  overflow: visible;
+  -webkit-line-clamp: none;
+}
+
+.markdownContent::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: linear-gradient(transparent, white);
+}
+
+.markdownContent h1,
+.markdownContent h2,
+.markdownContent h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.markdownContent p {
+  margin-bottom: 1rem;
+}
+
+.markdownContent pre {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: #1a1a1a;
+  overflow-x: auto;
+}
+
+.markdownContent code {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.markdownContent :not(pre) > code {
+  background-color: #f1f5f9;
+  color: #1a1a1a;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.markdownContent img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin: 1.5rem 0;
+}
+
+.markdownContent hr {
+  border: 0;
+  border-top: 1px solid #e5e7eb;
+  margin: 2rem 0;
+}
+
+.markdownContent table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.markdownContent th,
+.markdownContent td {
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+}
+
+.markdownContent th {
+  background: #f8fafc;
+  font-weight: 600;
+}
+
+.postMeta {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.stats {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.stats span {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.featuredBadge {
+  background: #ffd700;
+  color: #333;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: white;
+}
+
+.categories {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+  flex-wrap: wrap;
+}
+
+.category {
+  background: #2563eb;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.tags {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background: #f3f4f6;
+  color: #4b5563;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.tag::before {
+  content: '#';
+  opacity: 0.5;
+  margin-right: 0.125rem;
+}
+
+.postContainer {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.postHeader {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.postHeader .title {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  word-break: keep-all;
+  line-height: 1.3;
+}
+
+.metadata {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.metadata time {
+  color: #666;
+}
+
+.metadata .category {
+  background: #2563eb;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+}
+
+.tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.tag {
+  background: #f3f4f6;
+  color: #4b5563;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+}
+
+.postContent {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.markdownContent {
+  line-height: 1.8;
+  color: #1a1a1a;
+}
+
+.markdownContent h1,
+.markdownContent h2,
+.markdownContent h3,
+.markdownContent h4,
+.markdownContent h5,
+.markdownContent h6 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.markdownContent h1 { font-size: 2rem; }
+.markdownContent h2 { font-size: 1.75rem; }
+.markdownContent h3 { font-size: 1.5rem; }
+.markdownContent h4 { font-size: 1.25rem; }
+.markdownContent h5 { font-size: 1.125rem; }
+.markdownContent h6 { font-size: 1rem; }
+
+.markdownContent p {
+  margin-bottom: 1.5rem;
+}
+
+.markdownContent a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.markdownContent a:hover {
+  text-decoration: underline;
+}
+
+.markdownContent ul,
+.markdownContent ol {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.markdownContent li {
+  margin-bottom: 0.5rem;
+}
+
+.markdownContent blockquote {
+  border-left: 4px solid #2563eb;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  background: #f8fafc;
+  color: #4b5563;
+}
+
+.markdownContent pre {
+  background: #f8f9fa;
+  color: #333;
+  padding: 1rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.markdownContent pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+.markdownContent img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin: 1.5rem 0;
+}
+
+.markdownContent hr {
+  border: 0;
+  border-top: 1px solid #e5e7eb;
+  margin: 2rem 0;
+}
+
+.markdownContent table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.markdownContent th,
+.markdownContent td {
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+}
+
+.markdownContent th {
+  background: #f8fafc;
+  font-weight: 600;
+}
+
+.post {
+  background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4));
+  border-radius: 1.5rem;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.post header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.post .category {
+  margin-bottom: 1.5rem;
+}
+
+.post .postTitle {
+  font-size: 2.5rem;
+  margin: 1rem 0;
+}
+
+.post .date {
+  color: #888;
+  font-size: 1rem;
+}
+
+.content {
+  line-height: 1.8;
+  color: #333;
+}
+
+.content pre {
+  white-space: pre-wrap;
+  font-family: inherit;
+}
+
+.postDetail {
+  max-width: 800px;
+  margin: 80px auto 0;
+  padding: 2rem;
+}
+
+.postHeader {
+  margin-bottom: 2rem;
+}
+
+.postHeader .title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.metadata {
+  display: flex;
+  gap: 1rem;
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.category {
+  background: #2563eb;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+}
+
+.tags {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background: #f3f4f6;
+  color: #4b5563;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+}
+
+.markdownContent {
+  margin-top: 2rem;
+  line-height: 1.8;
+  color: #333;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .container {
+    margin-top: 6rem;
+    padding: 0 1rem;
+  }
+
+  .postsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .postContainer {
+    margin-top: 6rem;
+    padding: 0 1rem;
+  }
+
+  .post {
+    padding: 1.5rem;
+  }
+
+  .post .postTitle {
+    font-size: 2rem;
+  }
+
+  .postMeta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+  .postContainer {
+    padding: 1rem;
+    margin: 1rem auto;
+  }
+
+  .postContent {
+    padding: 1.5rem;
+  }
+
+  .postContent .postTitle {
+    font-size: 2rem;
+  }
+
+  .postContent .featuredImage {
+    margin: 1.5rem -1.5rem;
+  }
+
+  .postContent .markdownContent {
+    font-size: 1rem;
+  }
+
+  .postContent .markdownContent pre {
+    padding: 1rem;
+    margin: 1rem -0.5rem;
+  }
+}
