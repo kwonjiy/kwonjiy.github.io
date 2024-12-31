@@ -4,8 +4,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 0.8rem 2rem;
   font-family: 'Nanum Gothic', sans-serif;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
 
 .headerContent {
@@ -13,18 +21,24 @@
 }
 
 .headerContent h1 {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: bold;
   margin-bottom: 0.25rem;
+  background: linear-gradient(45deg, #2196F3, #E91E63);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -0.5px;
 }
 
 .headerContent p {
-  font-size: 0.875rem;
-  color: #4a4a4a;
+  font-size: 0.9rem;
+  color: #666;
+  letter-spacing: -0.3px;
 }
 
 .navbar {
-  padding: 0.5rem 0;
+  padding: 0.3rem 0;
 }
 
 .navList {
@@ -41,10 +55,11 @@
 .navItem a {
   text-decoration: none;
   color: #333;
-  font-weight: bold;
+  font-weight: 500;
   transition: color 0.3s ease;
+  font-size: 0.95rem;
 }
 
 .navItem a:hover {
-  color: #666;
+  color: #2196F3;
 }
