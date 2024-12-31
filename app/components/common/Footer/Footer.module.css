@@ -1,0 +1,24 @@
+.footer {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.footerIcons {
+  margin-bottom: 1rem;
+}
+
+.footerIcons a {
+  margin: 0 0.5rem;
+  color: #333;
+  font-size: 1.25rem;
+  text-decoration: none;
+}
+
+.footerIcons a:hover {
+  color: #666;
+}
+
+.footer p {
+  font-size: 0.875rem;
+  color: #666;
+}
