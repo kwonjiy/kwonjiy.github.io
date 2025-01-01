@@ -6,9 +6,7 @@ const nextConfig = {
     unoptimized: true,
   },
   experimental: {
-    serverActions: {
-      allowedOrigins: ['localhost:3000', 'localhost:3001'],
-    },
+    serverActions: true
   },
   typescript: {
     // !! WARN !!
