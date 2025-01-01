@@ -106,8 +106,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
 export async function generateStaticParams() {
   const { data: posts } = await supabase
-    .from('devjournal')
-    .select('slug');
+    .from('posts')
+    .select('slug')
+    .eq('category', 'DevJournal');
 
   return posts?.map((post) => ({
     slug: post.slug,
