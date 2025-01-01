@@ -5,7 +5,6 @@ const nextConfig = {
     domains: ['fglapqpkzzqcrqwbjpft.supabase.co'],
     unoptimized: true,
   },
-  basePath: '/komji-blog',
   experimental: {
     serverActions: {
       allowedOrigins: ['localhost:3000', 'localhost:3001'],
