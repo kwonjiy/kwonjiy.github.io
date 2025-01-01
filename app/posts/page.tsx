@@ -57,7 +57,7 @@ export default function PostsPage() {
             return {
               ...post,
               id: post.id.toString(),
-              tags: post.tags || [],
+              tags: Array.isArray(post.tags) ? post.tags : [],
               content,
               frontMatter: {
                 title: post.title,
