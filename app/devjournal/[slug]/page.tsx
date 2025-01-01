@@ -71,9 +71,10 @@ function PostDetail({ post }: PostDetailProps) {
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const { data, error } = await supabase
-    .from('devjournal')
+    .from('posts')
     .select('*')
     .eq('slug', params.slug)
+    .eq('category', 'DevJournal')
     .single();
 
   if (error) throw error;
@@ -81,7 +82,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   // 조회수 증가
   const { error: updateError } = await supabase
-    .from('devjournal')
+    .from('posts')
     .update({ view_count: (data.view_count || 0) + 1 })
     .eq('id', data.id);
 
@@ -96,9 +97,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
     frontMatter: {
       title: data.title,
       date: data.reg_date,
-      categories: data.category ? [data.category] : [],
+      categories: [data.category],
     },
-    tags: Array.isArray(data.tags) ? data.tags : []
   };
 
   return <PostDetail post={post} />;
