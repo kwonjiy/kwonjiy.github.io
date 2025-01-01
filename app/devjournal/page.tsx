@@ -37,8 +37,9 @@ export default function DevJournal() {
     async function fetchPosts() {
       try {
         const { data, error } = await supabase
-          .from('devjournal')
+          .from('posts')
           .select('*')
+          .eq('category', 'DevJournal')
           .order('reg_date', { ascending: false });
 
         if (error) throw error;
