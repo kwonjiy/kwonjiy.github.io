@@ -7,6 +7,8 @@
 .container {
   width: 100%;
   margin: 0 auto;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 /* Profile Section */
@@ -284,21 +286,4 @@
 .career-title-en {
   color: #666;
   font-size: 0.95rem;
-}
-
-/* Header Styles */
-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  transition: background-color 0.3s ease;
-}
-
-.scrolled {
-  background-color: rgba(230, 204, 190, 0.95);
-}
-
-body {
-  padding-top: 80px;
 }
