@@ -30,6 +30,7 @@ interface PostDetailProps {
 }
 
 function PostDetail({ post }: PostDetailProps) {
+  const tags = Array.isArray(post.tags) ? post.tags : [];
   return (
     <div className={styles.container}>
       <Header />
@@ -52,9 +53,9 @@ function PostDetail({ post }: PostDetailProps) {
             dangerouslySetInnerHTML={{ __html: post.content }} 
           />
           <footer>
-            {post.tags && post.tags.length > 0 && (
+            {tags.length > 0 && (
               <div className={styles.tags}>
-                {post.tags.map((tag, index) => (
+                {tags.map((tag, index) => (
                   <span key={index} className={styles.tag}>#{tag}</span>
                 ))}
               </div>
@@ -99,6 +100,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
       date: data.reg_date,
       categories: [data.category],
     },
+    tags: Array.isArray(data.tags) ? data.tags : [],
   };
 
   return <PostDetail post={post} />;
