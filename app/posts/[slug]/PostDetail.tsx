@@ -1,10 +1,10 @@
-import { supabase } from '@/lib/supabase';
-import { parseMarkdown } from '@/lib/markdown';
-import styles from '../posts.module.css';
+'use client';
+
 import Link from 'next/link';
+import styles from '../posts.module.css';
 import Header from '@/app/components/common/Header/Header';
 
-interface ProcessedPost {
+interface Post {
   id: string;
   slug: string;
   title: string;
@@ -26,10 +26,10 @@ interface ProcessedPost {
 }
 
 interface PostDetailProps {
-  post: ProcessedPost;
+  post: Post;
 }
 
-function PostDetail({ post }: PostDetailProps) {
+export default function PostDetail({ post }: PostDetailProps) {
   return (
     <div className={styles.container}>
       <Header />
@@ -52,7 +52,7 @@ function PostDetail({ post }: PostDetailProps) {
             dangerouslySetInnerHTML={{ __html: post.content }} 
           />
           <footer>
-            {post.tags && post.tags.length > 0 && (
+            {post.tags && Array.isArray(post.tags) && post.tags.length > 0 && (
               <div className={styles.tags}>
                 {post.tags.map((tag, index) => (
                   <span key={index} className={styles.tag}>#{tag}</span>
@@ -67,49 +67,4 @@ function PostDetail({ post }: PostDetailProps) {
       </main>
     </div>
   );
-}
-
-export default async function Page({ params }: { params: { slug: string } }) {
-  const { data, error } = await supabase
-    .from('posts')
-    .select('*')
-    .eq('slug', params.slug)
-    .single();
-
-  if (error) throw error;
-  if (!data) throw new Error('Post not found');
-
-  // 조회수 증가
-  const { error: updateError } = await supabase
-    .from('posts')
-    .update({ view_count: (data.view_count || 0) + 1 })
-    .eq('id', data.id);
-
-  if (updateError) console.error('Failed to update view count:', updateError);
-
-  const { content } = await parseMarkdown(data.content);
-  
-  const post = {
-    ...data,
-    id: data.id.toString(),
-    content,
-    frontMatter: {
-      title: data.title,
-      date: data.reg_date,
-      categories: data.category ? [data.category] : [],
-    },
-    tags: Array.isArray(data.tags) ? data.tags : []
-  };
-
-  return <PostDetail post={post} />;
-}
-
-export async function generateStaticParams() {
-  const { data: posts } = await supabase
-    .from('posts')
-    .select('slug');
-
-  return posts?.map((post) => ({
-    slug: post.slug,
-  })) || [];
 }

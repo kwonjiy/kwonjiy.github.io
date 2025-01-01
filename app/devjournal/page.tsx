@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import styles from './devjournal.module.css';
+import styles from '../posts/posts.module.css';
 import Header from '../components/common/Header/Header';
 import { supabase } from '@/lib/supabase';
 import { parseMarkdown } from '@/lib/markdown';
