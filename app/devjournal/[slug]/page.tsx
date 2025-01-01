@@ -6,6 +6,7 @@ import styles from '../../posts/posts.module.css';
 import { parseMarkdown } from '@/lib/markdown';
 import Link from 'next/link';
 import Header from '@/app/components/common/Header/Header';
+import { supabase } from '@/lib/supabase';
 
 interface Post {
   id: string;
@@ -51,28 +52,42 @@ export default function DevJournalDetailPage() {
           throw new Error('Slug is required');
         }
 
-        const response = await fetch(`/api/devjournal/${slug}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch post');
-        }
+        const { data, error } = await supabase
+          .from('devjournal')
+          .select('*')
+          .eq('slug', slug)
+          .single();
 
-        const postData: Post = await response.json();
-        const { content } = await parseMarkdown(postData.content);
+        if (error) throw error;
+        if (!data) throw new Error('Post not found');
+
+        // 조회수 증가
+        const { error: updateError } = await supabase
+          .from('devjournal')
+          .update({ view_count: (data.view_count || 0) + 1 })
+          .eq('id', data.id);
+
+        if (updateError) console.error('Failed to update view count:', updateError);
+
+        const { content } = await parseMarkdown(data.content);
         
-        const processedPost = {
-          ...postData,
+        const processedPost: ProcessedPost = {
+          ...data,
+          id: data.id.toString(),
           content,
           frontMatter: {
-            title: postData.title,
-            date: postData.reg_date,
-            categories: [postData.category]
-          }
+            title: data.title,
+            date: data.reg_date,
+            categories: data.category ? [data.category] : [],
+          },
+          tags: data.tags || []
         };
-        
+
         setPost(processedPost);
+        setError(null);
       } catch (err) {
         console.error('Error fetching post:', err);
-        setError(err instanceof Error ? err.message : 'An error occurred');
+        setError(err instanceof Error ? err.message : 'Failed to fetch post');
       } finally {
         setLoading(false);
       }

@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import styles from '../posts/posts.module.css';
-import { parseMarkdown } from '@/lib/markdown';
 import Link from 'next/link';
-import Header from '@/app/components/common/Header/Header';
+import styles from './devjournal.module.css';
+import Header from '../components/common/Header/Header';
+import { supabase } from '@/lib/supabase';
+import { parseMarkdown } from '@/lib/markdown';
 
 interface Post {
   id: string;
@@ -27,49 +28,43 @@ interface Post {
   };
 }
 
-interface ProcessedPost extends Post {
-  content: string;
-  frontMatter: {
-    title: string;
-    date?: string;
-    categories?: string[];
-  };
-}
-
-export default function DevJournalPage() {
-  const [posts, setPosts] = useState<ProcessedPost[]>([]);
+export default function DevJournal() {
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchPosts() {
       try {
-        const response = await fetch('/api/devjournal');
-        if (!response.ok) {
-          throw new Error('Failed to fetch posts');
-        }
-        const data: Post[] = await response.json();
-        
-        // Process markdown content for each post
+        const { data, error } = await supabase
+          .from('devjournal')
+          .select('*')
+          .order('reg_date', { ascending: false });
+
+        if (error) throw error;
+
         const processedPosts = await Promise.all(
           data.map(async (post) => {
             const { content } = await parseMarkdown(post.content);
             return {
               ...post,
+              id: post.id.toString(),
               content,
               frontMatter: {
                 title: post.title,
                 date: post.reg_date,
-                categories: [post.category]
-              }
+                categories: post.category ? [post.category] : []
+              },
+              tags: post.tags || []
             };
           })
         );
-        
+
         setPosts(processedPosts);
+        setError(null);
       } catch (err) {
-        console.error('Error processing posts:', err);
-        setError(err instanceof Error ? err.message : 'An error occurred');
+        console.error('Error fetching posts:', err);
+        setError(err instanceof Error ? err.message : 'Failed to fetch posts');
       } finally {
         setLoading(false);
       }
@@ -78,48 +73,46 @@ export default function DevJournalPage() {
     fetchPosts();
   }, []);
 
-  if (loading) return <div className={styles.container}>Loading...</div>;
-  if (error) return <div className={styles.container}>Error: {error}</div>;
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className={styles.container}>
       <Header />
-      <h1 className={styles.title}>
-        <Link href="/" className={styles.titleLink}>
-          개발 일지
-        </Link>
-      </h1>
-      <div className={styles.postsGrid}>
-        {posts.map((post, index) => (
-          <Link href={`/devjournal/${post.slug}`} key={post.id}>
-            <div className={styles.postCard}>
+      <main className={styles.main}>
+        <h1 className={styles.title}>Dev Journal</h1>
+        <div className={styles.grid}>
+          {posts.map((post) => (
+            <Link href={`/devjournal/${post.slug}`} key={post.id} className={styles.card}>
               {post.featured_image && (
-                <div className={styles.imageWrapper}>
-                  <img src={post.featured_image} alt={post.frontMatter.title} />
+                <div className={styles.cardImage}>
+                  <img src={post.featured_image} alt={post.title} />
                 </div>
               )}
-              {post.is_featured && <span className={styles.featuredBadge}>Featured</span>}
-              <h2 className={styles.postTitle}>{post.frontMatter.title}</h2>
-              <div className={styles.categories}>
-                <span className={styles.category}>{post.category}</span>
+              <div className={styles.cardContent}>
+                <h2>{post.title}</h2>
+                {post.excerpt && <p>{post.excerpt}</p>}
+                <div className={styles.metadata}>
+                  <time>{new Date(post.reg_date).toLocaleDateString()}</time>
+                  {post.category && (
+                    <>
+                      <span className={styles.separator}>•</span>
+                      <span>{post.category}</span>
+                    </>
+                  )}
+                </div>
+                {post.tags && post.tags.length > 0 && (
+                  <div className={styles.tags}>
+                    {post.tags.map((tag, index) => (
+                      <span key={index} className={styles.tag}>#{tag}</span>
+                    ))}
+                  </div>
+                )}
               </div>
-              {post.tags && post.tags.length > 0 && (
-                <div className={styles.tags}>
-                  {post.tags.map((tag: string) => (
-                    <span key={tag} className={styles.tag}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-              <div 
-                className={styles.markdownContent}
-                dangerouslySetInnerHTML={{ __html: post.content }}
-              />
-            </div>
-          </Link>
-        ))}
-      </div>
+            </Link>
+          ))}
+        </div>
+      </main>
     </div>
   );
 }

@@ -1,9 +1,9 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import styles from './posts.module.css';
+import { supabase } from '@/lib/supabase';
 import { parseMarkdown, PostData } from '@/lib/markdown';
 
 interface Post {
@@ -44,18 +44,20 @@ export default function PostsPage() {
   useEffect(() => {
     async function fetchPosts() {
       try {
-        const response = await fetch('/api/posts');
-        if (!response.ok) {
-          throw new Error('Failed to fetch posts');
-        }
-        const data: Post[] = await response.json();
-        
-        // Process markdown content for each post
+        const { data, error } = await supabase
+          .from('posts')
+          .select('*')
+          .order('reg_date', { ascending: false });
+
+        if (error) throw error;
+
         const processedPosts = await Promise.all(
           data.map(async (post) => {
             const { content } = await parseMarkdown(post.content);
             return {
               ...post,
+              id: post.id.toString(),
+              tags: post.tags || [],
               content,
               frontMatter: {
                 title: post.title,
@@ -65,11 +67,12 @@ export default function PostsPage() {
             };
           })
         );
-        
+
         setPosts(processedPosts);
+        setError(null);
       } catch (err) {
-        console.error('Error processing posts:', err);
-        setError(err instanceof Error ? err.message : 'An error occurred');
+        console.error('Error fetching posts:', err);
+        setError(err instanceof Error ? err.message : 'Failed to fetch posts');
       } finally {
         setLoading(false);
       }
@@ -90,54 +93,46 @@ export default function PostsPage() {
       </h1>
       <div className={styles.postsGrid}>
         {posts.map((post, index) => (
-          <motion.div
-            key={post.id}
-            className={styles.card}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: index * 0.1 }}
-          >
-            <Link href={`/posts/${post.slug}`}>
-              <div className={styles.cardContent}>
-                {post.featured_image && (
-                  <div className={styles.imageWrapper}>
-                    <img src={post.featured_image} alt={post.frontMatter.title} />
-                  </div>
-                )}
-                {post.is_featured && <span className={styles.featuredBadge}>Featured</span>}
-                <h2 className={styles.postTitle}>{post.frontMatter.title}</h2>
-                <div className={styles.categories}>
-                  <span className={styles.category}>{post.category}</span>
+          <Link href={`/posts/${post.slug}`} key={post.id}>
+            <div className={styles.cardContent}>
+              {post.featured_image && (
+                <div className={styles.imageWrapper}>
+                  <img src={post.featured_image} alt={post.frontMatter.title} />
                 </div>
-                {post.tags && post.tags.length > 0 && (
-                  <div className={styles.tags}>
-                    {post.tags.map((tag: string) => (
-                      <span key={tag} className={styles.tag}>
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-                <div 
-                  className={styles.markdownContent}
-                  dangerouslySetInnerHTML={{ __html: post.content }}
-                />
-                <div className={styles.postMeta}>
-                  <time className={styles.date}>
-                    {new Date(post.reg_date).toLocaleDateString('ko-KR', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                  </time>
-                  <div className={styles.stats}>
-                    <span>조회 {post.view_count}</span>
-                    <span>좋아요 {post.likes_count}</span>
-                  </div>
+              )}
+              {post.is_featured && <span className={styles.featuredBadge}>Featured</span>}
+              <h2 className={styles.postTitle}>{post.frontMatter.title}</h2>
+              <div className={styles.categories}>
+                <span className={styles.category}>{post.category}</span>
+              </div>
+              {post.tags && post.tags.length > 0 && (
+                <div className={styles.tags}>
+                  {post.tags.map((tag: string) => (
+                    <span key={tag} className={styles.tag}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+              <div 
+                className={styles.markdownContent}
+                dangerouslySetInnerHTML={{ __html: post.content }}
+              />
+              <div className={styles.postMeta}>
+                <time className={styles.date}>
+                  {new Date(post.reg_date).toLocaleDateString('ko-KR', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </time>
+                <div className={styles.stats}>
+                  <span>조회 {post.view_count}</span>
+                  <span>좋아요 {post.likes_count}</span>
                 </div>
               </div>
-            </Link>
-          </motion.div>
+            </div>
+          </Link>
         ))}
       </div>
     </div>

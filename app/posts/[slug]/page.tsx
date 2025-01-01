@@ -6,6 +6,7 @@ import styles from '../posts.module.css';
 import { parseMarkdown } from '@/lib/markdown';
 import Link from 'next/link';
 import Header from '@/app/components/common/Header/Header';
+import { supabase } from '@/lib/supabase';
 
 interface Post {
   id: string;
@@ -51,66 +52,89 @@ export default function PostDetail() {
           throw new Error('Slug is required');
         }
 
-        const response = await fetch(`/api/posts/${slug}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch post');
-        }
+        const { data, error } = await supabase
+          .from('posts')
+          .select('*')
+          .eq('slug', slug)
+          .single();
 
-        const postData: Post = await response.json();
-        const { content } = await parseMarkdown(postData.content);
+        if (error) throw error;
+        if (!data) throw new Error('Post not found');
+
+        // 조회수 증가
+        const { error: updateError } = await supabase
+          .from('posts')
+          .update({ view_count: (data.view_count || 0) + 1 })
+          .eq('id', data.id);
+
+        if (updateError) console.error('Failed to update view count:', updateError);
+
+        const { content } = await parseMarkdown(data.content);
         
-        const processedPost = {
-          ...postData,
+        const processedPost: ProcessedPost = {
+          ...data,
+          id: data.id.toString(),
           content,
           frontMatter: {
-            title: postData.title,
-            date: postData.reg_date,
-            categories: [postData.category]
-          }
+            title: data.title,
+            date: data.reg_date,
+            categories: data.category ? [data.category] : [],
+          },
+          tags: data.tags || []
         };
-        
+
         setPost(processedPost);
+        setError(null);
       } catch (err) {
         console.error('Error fetching post:', err);
-        setError(err instanceof Error ? err.message : 'An error occurred');
+        setError(err instanceof Error ? err.message : 'Failed to fetch post');
       } finally {
         setLoading(false);
       }
     }
 
     fetchPost();
-  }, [params?.slug]);
+  }, [params]);
 
-  if (loading) return <div className={styles.container}>Loading...</div>;
-  if (error) return <div className={styles.container}>Error: {error}</div>;
-  if (!post) return <div className={styles.container}>Post not found</div>;
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!post) return <div>Post not found</div>;
 
   return (
     <div className={styles.container}>
       <Header />
-      <article className={styles.postDetail}>
-        <div className={styles.postHeader}>
-          <h1 className={styles.title}>{post.frontMatter.title}</h1>
-          <div className={styles.metadata}>
-            <time>{new Date(post.reg_date).toLocaleDateString()}</time>
-            <span>조회수: {post.view_count}</span>
-          </div>
-          <div className={styles.tags}>
-            {post.tags.map((tag: string) => (
-              <span key={tag} className={styles.tag}>{tag}</span>
-            ))}
-          </div>
+      <main className={styles.main}>
+        <article className={styles.post}>
+          <header>
+            <h1>{post.title}</h1>
+            <div className={styles.metadata}>
+              <time>{new Date(post.reg_date).toLocaleDateString()}</time>
+              {post.category && (
+                <>
+                  <span className={styles.separator}>•</span>
+                  <span>{post.category}</span>
+                </>
+              )}
+            </div>
+          </header>
+          <div 
+            className={styles.content}
+            dangerouslySetInnerHTML={{ __html: post.content }} 
+          />
+          <footer>
+            {post.tags && post.tags.length > 0 && (
+              <div className={styles.tags}>
+                {post.tags.map((tag, index) => (
+                  <span key={index} className={styles.tag}>#{tag}</span>
+                ))}
+              </div>
+            )}
+          </footer>
+        </article>
+        <div className={styles.navigation}>
+          <Link href="/posts">← Back to Posts</Link>
         </div>
-        {post.featured_image && (
-          <div className={styles.featuredImage}>
-            <img src={post.featured_image} alt={post.frontMatter.title} />
-          </div>
-        )}
-        <div 
-          className={styles.markdownContent}
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
-      </article>
+      </main>
     </div>
   );
 }
