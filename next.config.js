@@ -15,7 +15,7 @@ const nextConfig = {
     // 프로덕션에서는 이 옵션을 false로 설정하세요!
     ignoreDuringBuilds: true,
   },
-  basePath: '/komji-blog',
+  // basePath: '/komji-blog',
 }
 
 module.exports = nextConfig
