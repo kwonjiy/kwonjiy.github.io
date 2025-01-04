@@ -47,6 +47,7 @@ export default function PostsPage() {
         const { data, error } = await supabase
           .from('posts')
           .select('*')
+          .neq('category', 'DevJournal')
           .order('reg_date', { ascending: false });
 
         if (error) throw error;
@@ -81,7 +82,11 @@ export default function PostsPage() {
     fetchPosts();
   }, []);
 
-  if (loading) return <div className={styles.container}>Loading...</div>;
+  if (loading) return (
+    <div className="spinner">
+      <div></div>
+    </div>
+  );
   if (error) return <div className={styles.container}>Error: {error}</div>;
 
   return (

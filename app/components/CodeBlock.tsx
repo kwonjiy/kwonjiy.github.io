@@ -1,8 +1,5 @@
 'use client';
 
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
-
 interface CodeBlockProps {
   language: string;
   value: string;
@@ -10,13 +7,15 @@ interface CodeBlockProps {
 
 export default function CodeBlock({ language, value }: CodeBlockProps) {
   return (
-    <SyntaxHighlighter
-      language={language}
-      style={tomorrow}
-      showLineNumbers={true}
-      wrapLines={true}
-    >
-      {value}
-    </SyntaxHighlighter>
+    <div className="code-block">
+      <pre>
+        <div className="code-header">
+          <span className="language">{language}</span>
+        </div>
+        <code className={`language-${language}`}>
+          {value}
+        </code>
+      </pre>
+    </div>
   );
 }

@@ -62,7 +62,9 @@ function PostDetail({ post }: PostDetailProps) {
           </footer>
         </article>
         <div className={styles.navigation}>
-          <Link href="/posts">← Back to Posts</Link>
+          <Link href="/posts" className={styles.backButton}>
+            <span className="icon"></span> Back to Posts
+          </Link>
         </div>
       </main>
     </div>

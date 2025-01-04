@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import 'prismjs/themes/prism-tomorrow.css'
-import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 import "./styles/layout.css"; //header, footer
+import "./styles/code.css";
 import Header from './components/common/Header/Header';
 import Footer from './components/common/Footer/Footer';
 

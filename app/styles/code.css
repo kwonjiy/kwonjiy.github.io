@@ -1,0 +1,101 @@
+.code-block {
+  margin: 1.5rem 0;
+}
+
+.code-block pre {
+  margin: 0;
+  padding: 0;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+.code-block .code-header {
+  background-color: #2d2d2d;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #3d3d3d;
+}
+
+.code-block .language {
+  color: #858585;
+  font-size: 0.9rem;
+  font-family: monospace;
+  text-transform: lowercase;
+}
+
+.code-block code {
+  display: block;
+  padding: 1rem;
+  color: #d4d4d4;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre;
+  overflow-x: auto;
+  tab-size: 2;
+}
+
+/* Docker */
+.language-dockerfile {
+  color: #d4d4d4;
+}
+
+.language-dockerfile .keyword {
+  color: #569cd6;
+}
+
+/* YAML */
+.language-yaml {
+  color: #d4d4d4;
+}
+
+.language-yaml .key {
+  color: #9cdcfe;
+}
+
+.language-yaml .string {
+  color: #ce9178;
+}
+
+/* Bash */
+.language-bash {
+  color: #d4d4d4;
+}
+
+.language-bash .command {
+  color: #569cd6;
+}
+
+.language-bash .parameter {
+  color: #9cdcfe;
+}
+
+/* Line Numbers */
+.code-block pre {
+  counter-reset: line;
+}
+
+.code-block code {
+  position: relative;
+  padding-left: 3.5rem;
+}
+
+.code-block code::before {
+  content: counter(line);
+  counter-increment: line;
+  position: absolute;
+  left: 0;
+  width: 2.5rem;
+  padding-right: 1rem;
+  border-right: 1px solid #3d3d3d;
+  color: #858585;
+  text-align: right;
+}
+
+/* Common Syntax */
+.comment { color: #6A9955; }
+.string { color: #ce9178; }
+.number { color: #b5cea8; }
+.keyword { color: #569cd6; }
+.operator { color: #d4d4d4; }
+.punctuation { color: #d4d4d4; }

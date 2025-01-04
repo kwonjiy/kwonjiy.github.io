@@ -1,6 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import { parseMarkdown } from '@/lib/markdown';
-import styles from '../../posts/posts.module.css';
+import styles from '../../devjournal/devjournal.module.css';
 import Link from 'next/link';
 import Header from '@/app/components/common/Header/Header';
 
@@ -63,7 +63,7 @@ function PostDetail({ post }: PostDetailProps) {
           </footer>
         </article>
         <div className={styles.navigation}>
-          <Link href="/devjournal">← Back to DevJournal</Link>
+          <Link href="/devjournal">Back to DevJournal</Link>
         </div>
       </main>
     </div>

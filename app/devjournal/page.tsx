@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import styles from '../posts/posts.module.css';
+import styles from '../devjournal/devjournal.module.css';
 import Header from '../components/common/Header/Header';
 import { supabase } from '@/lib/supabase';
 import { parseMarkdown } from '@/lib/markdown';
@@ -12,20 +12,12 @@ interface Post {
   slug: string;
   title: string;
   content: string;
-  view_count: number;
-  likes_count: number;
   reg_date: string;
   modify_date: string | null;
   featured_image: string | null;
   excerpt: string | null;
-  is_featured: boolean;
   category: string;
   tags: string[];
-  frontMatter?: {
-    title: string;
-    date?: string;
-    categories?: string[];
-  };
 }
 
 export default function DevJournal() {
@@ -43,21 +35,16 @@ export default function DevJournal() {
           .order('reg_date', { ascending: false });
 
         if (error) throw error;
-
         const processedPosts = await Promise.all(
           data.map(async (post) => {
             const { content } = await parseMarkdown(post.content);
-            return {
+            const processedPost = {
               ...post,
               id: post.id.toString(),
+              tags: Array.isArray(post.tags) ? post.tags : (post.tags ? post.tags.split(',').map((tag: string) => tag.trim()) : []),
               content,
-              frontMatter: {
-                title: post.title,
-                date: post.reg_date,
-                categories: post.category ? [post.category] : []
-              },
-              tags: post.tags || []
             };
+            return processedPost;
           })
         );
 
@@ -81,27 +68,23 @@ export default function DevJournal() {
     <div className={styles.container}>
       <Header />
       <main className={styles.main}>
-        <h1 className={styles.title}>Dev Journal</h1>
+        <h1 className={styles.title}>
+          <Link href="/" className={styles.titleLink}>
+            개발 일지
+          </Link>
+        </h1>
         <div className={styles.grid}>
           {posts.map((post) => (
             <Link href={`/devjournal/${post.slug}`} key={post.id} className={styles.card}>
-              {post.featured_image && (
-                <div className={styles.cardImage}>
-                  <img src={post.featured_image} alt={post.title} />
-                </div>
-              )}
-              <div className={styles.cardContent}>
-                <h2>{post.title}</h2>
-                {post.excerpt && <p>{post.excerpt}</p>}
-                <div className={styles.metadata}>
-                  <time>{new Date(post.reg_date).toLocaleDateString()}</time>
-                  {post.category && (
-                    <>
-                      <span className={styles.separator}>•</span>
-                      <span>{post.category}</span>
-                    </>
-                  )}
-                </div>
+              <time className={styles.postDate}>
+                {new Date(post.reg_date).toLocaleDateString('ko-KR', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </time>
+              <div className={styles.postContent}>
+                <h2 className={styles.postTitle}>{post.title}</h2>
                 {post.tags && post.tags.length > 0 && (
                   <div className={styles.tags}>
                     {post.tags.map((tag, index) => (

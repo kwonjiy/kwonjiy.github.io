@@ -1,6 +1,6 @@
 /* Main Content Styles */
 #main-content {
-  margin: 6rem auto 4rem;
+  margin: 10rem auto 4rem;
   padding: 0;
 }
 
@@ -286,4 +286,8 @@
 .career-title-en {
   color: #666;
   font-size: 0.95rem;
+}
+
+.posts_container__XnRsa {
+  margin-top: 5rem;
 }

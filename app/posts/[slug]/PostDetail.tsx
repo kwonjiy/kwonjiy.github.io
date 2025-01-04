@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import styles from '../posts.module.css';
+import styles from '../../posts.module.css';
 import Header from '@/app/components/common/Header/Header';
+import { FaArrowLeft } from 'react-icons/fa';
 
 interface Post {
   id: string;
@@ -62,7 +63,9 @@ export default function PostDetail({ post }: PostDetailProps) {
           </footer>
         </article>
         <div className={styles.navigation}>
-          <Link href="/posts">← Back to Posts</Link>
+          <Link href="/posts" className={styles.backButton}>
+            <span className="icon"><FaArrowLeft /></span> Back to Posts
+          </Link>
         </div>
       </main>
     </div>
