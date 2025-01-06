@@ -86,6 +86,8 @@
 }
 
 .navItem {
+  position: relative;
+  display: inline-block;
   margin: 0 1.5rem;
 }
 
@@ -99,4 +101,52 @@
 
 .navItem a:hover {
   color: #2196F3;
+}
+
+.navItem.info::after {
+  content: '\25BC'; /* Down arrow */
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+  vertical-align: middle;
+}
+
+.icon {
+  font-size: 0.7rem;
+  color: #888;
+  margin-left: 0.1rem;
+}
+
+.dropdownMenu {
+  width: fit-content;
+  min-width: unset;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.5rem 0;
+  z-index: 1001;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.dropdownMenu li {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  list-style: none;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.dropdownMenu li:hover {
+  background-color: #f5f5f5;
+}
+
+.navItem:hover .dropdownMenu {
+  display: block;
 }

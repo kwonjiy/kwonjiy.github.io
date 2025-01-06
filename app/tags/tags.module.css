@@ -1,0 +1,84 @@
+.container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 10rem;
+  margin-bottom: 20rem;
+  text-align: center;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #5A3E85; /* Match blog theme color */
+}
+
+.tagGrid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 3rem;
+}
+
+.tagCard {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: transform 0.2s ease-in-out;
+}
+
+.cardContent {
+  display: inline-block;
+  padding: 0 0.8rem;
+  background: white;
+  color: transparent;
+  border: 2px solid;
+  border-color: #5A3E85;
+  background-clip: text;
+  -webkit-background-clip: text;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+  margin: 0.5rem;
+  border-radius: 20px;
+}
+
+.cardContent:hover {
+  background: linear-gradient(45deg, #a0c5e4, #f8aac4);
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tagName {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #5A3E85; /* Match blog theme color */
+}
+
+.tagInfo {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.tagId {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.2rem;
+}
+
+.tagSlug {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.2rem;
+}
+
+.tagId, .tagSlug {
+  opacity: 0.7;
+}
